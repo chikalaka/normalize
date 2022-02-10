@@ -16,27 +16,3 @@ test("minMaxNormalization", () => {
     1
   ])
 })
-
-// test("meanNormalization", () => {
-//   expect(meanNormalization([1, 2, 3, 4, 5])).toStrictEqual([
-//     -0.5, -0.25, 0, 0.25, 0.5
-//   ])
-//   expect(meanNormalization([0, ...Array(50).fill(1), 50])).toStrictEqual([
-//     -0.038461538461538464,
-//     ...Array(50).fill(-0.018461538461538463),
-//     0.9615384615384616
-//   ])
-//   expect(meanNormalization([1, 1, 1, 1, 1])).toStrictEqual([0, 0, 0, 0, 0])
-// })
-//
-// test("standardization", () => {
-//   expect(standardization([1, 2, 3, 4, 5])).toStrictEqual([
-//     -1.414213562373095, -0.7071067811865475, 0, 0.7071067811865475,
-//     1.414213562373095
-//   ])
-//   expect(standardization([0, ...Array(50).fill(1), 50])).toStrictEqual([
-//     -0.28559773898876994,
-//     ...Array(50).fill(-0.13708691471460957),
-//     7.1399434747192485
-//   ])
-// })
