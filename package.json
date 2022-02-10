@@ -1,0 +1,37 @@
+{
+  "name": "normalize",
+  "version": "1.0.0",
+  "description": "Number Normalizer",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chikalaka/normalize.git"
+  },
+  "keywords": [""],
+  "author": "E-C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chikalaka/normalize/issues"
+  },
+  "homepage": "https://github.com/chikalaka/normalize#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
+  }
+}
