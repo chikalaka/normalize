@@ -1,5 +1,5 @@
 {
-  "name": "normalize",
+  "name": "data-normalize",
   "version": "1.0.0",
   "description": "Number Normalizer",
   "main": "lib/index.js",

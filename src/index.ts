@@ -1,11 +1,7 @@
-const isFunction = (v: any): v is Function => typeof v === "function"
 const isString = (v: any): v is string => typeof v === "string"
-const isNumberArray = (v: any[]): v is number[] => typeof v[0] === "number"
-const isObject = (v: any): v is object =>
-  v && typeof v === "object" && v.constructor === Object
-
-const run = <T = any>(func: ((...args: any[]) => T) | T, ...args: any[]): T =>
-  isFunction(func) ? func(...args) : func
+const isNumber = (v: any): v is number => typeof v === "number"
+const isNumberArray = (v: any[]): v is number[] =>
+  v.length > 0 && typeof v[0] === "number"
 
 type Keys = {
   byValue: string | ((o: object) => string)
@@ -20,6 +16,19 @@ type Scales = {
 type NumberSet = (dataSet: number[], options: Scales) => number[]
 type ObjectSet = (dataSet: object[], options: Scales & Keys) => object[]
 
+type objData = {
+  objList: Array<T>
+  keys: Keys
+}
+
+type SimpleData = {
+  simpleList: Array<number>
+}
+
+type Args = objData | SimpleData
+
+type Func = (args: Args) => Array<T>
+
 interface Func1 {
   (dataSet: number[], options: Scales): number[]
   (dataSet: object[], options: Scales & Keys): object[]
@@ -31,11 +40,31 @@ type Func3<T extends number[] | object[]> = T extends number[]
   ? NumberSet
   : ObjectSet
 
-const dataNormalize: Func3<number[] | object[]> = (dataSet, options) => {
+type DataNormalize = <T>(
+  dataSet: T[],
+  options: T extends number ? Scales : Scales & Keys
+) => T[]
+
+type Tes = <T>(a: T[]) => T[]
+type TesNum = <T>(
+  a: (number | object)[]
+) => T extends number ? number[] : object[]
+
+const test: Tes = a => {
+  if (isNumberArray(a)) {
+    return a.map((x: number) => x + 1)
+  }
+  return a
+}
+
+const dataNormalize: DataNormalize = (dataSet, options) => {
   // if (!isNumberArray(dataSet) && (!options.byValue || !options.newKey)) {
   //   console.error("Insufficient arguments have passed")
   //   return dataSet
   // }
+  if (isNumberArray(dataSet)) {
+    options
+  }
 
   const { scale = [0, 1], forceMinMaxValues } = options || {}
 
@@ -57,10 +86,11 @@ const dataNormalize: Func3<number[] | object[]> = (dataSet, options) => {
   }
 
   if (isNumberArray(dataSet)) return dataSet.map(normalizeDatum)
+  return dataSet
 
-  return dataSet.forEach((o: { [index: string]: any }) => {
-    o[options.newKey] = normalizeDatum(getValue(o))
-  })
+  // return dataSet.map((o: { [index: string]: any }) => {
+  //   o[options.newKey] = normalizeDatum(getValue(o))
+  // })
 }
 
 export default dataNormalize
